@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andrés Felipe Romero - Mentoría Estratégica en Marketing Digital</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Harmony -->
+    <!-- Application Structure Plan: A single-page application with a sticky navigation bar for easy access to key sections: Services, Investment, Methodology, and Contact. The structure guides the user logically from understanding the value proposition (Hero section), exploring the specific offerings (interactive 'Services' cards), analyzing the cost-benefit (visual 'Investment' section with a dynamic chart), understanding the process ('Methodology'), and finally, taking action ('Contact'). This flow is designed to be intuitive, turning a text-heavy document into a digestible and persuasive interactive experience. -->
+    <!-- Visualization & Content Choices: 
+        - Hero: Goal=Engage, Method=Large Typography/CTA, Interaction=Hover, Justification=Strong first impression.
+        - Services: Goal=Organize/Inform, Method=Grid of interactive cards (HTML/JS), Interaction=Click-to-expand, Justification=Breaks down dense information into manageable, user-controlled chunks.
+        - Investment: Goal=Compare/Persuade, Method=Interactive pricing cards + Chart.js Bar Chart, Interaction=Card hover highlights chart bar, Justification=The bar chart visually and powerfully demonstrates the 'progressive savings' benefit, which is more impactful than a simple table.
+        - Methodology: Goal=Inform, Method=Numbered list with icons, Interaction=Static, Justification=Provides a clear, easy-to-follow process.
+        - Contact: Goal=Action, Method=Clear text with mailto/tel links, Justification=Removes friction for user outreach.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFBF8;
+            color: #3D3B3A;
+        }
+        .nav-link {
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            display: block;
+            margin-top: 5px;
+            right: 0;
+            background: #D97706;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover:after {
+            width: 100%;
+            left: 0;
+            background: #D97706;
+        }
+        .active-link:after {
+             width: 100%;
+            left: 0;
+            background: #D97706;
+        }
+        .service-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .chart-container {
+            position: relative;
+            margin: auto;
+            height: 40vh;
+            max-height: 400px;
+            width: 100%;
+            max-width: 600px;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header & Navigation -->
+    <header id="header" class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-xl font-bold text-amber-600">Andrés F. Romero</a>
+            <div class="hidden md:flex space-x-8">
+                <a href="#servicios" class="nav-link text-gray-600 hover:text-amber-600 font-medium">Servicios</a>
+                <a href="#inversion" class="nav-link text-gray-600 hover:text-amber-600 font-medium">Inversión</a>
+                <a href="#metodologia" class="nav-link text-gray-600 hover:text-amber-600 font-medium">Metodología</a>
+                <a href="#contacto" class="nav-link text-gray-600 hover:text-amber-600 font-medium">Contacto</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+            <a href="#servicios" class="block py-2 text-gray-600 hover:text-amber-600">Servicios</a>
+            <a href="#inversion" class="block py-2 text-gray-600 hover:text-amber-600">Inversión</a>
+            <a href="#metodologia" class="block py-2 text-gray-600 hover:text-amber-600">Metodología</a>
+            <a href="#contacto" class="block py-2 text-gray-600 hover:text-amber-600">Contacto</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="container mx-auto px-6 py-16 md:py-24 text-center">
+            <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">
+                Tu Socio Estratégico para la <span class="text-amber-600">Transformación Digital</span>
+            </h1>
+            <p class="mt-6 max-w-3xl mx-auto text-lg text-gray-600">
+                Ofrezco un acompañamiento personalizado y de alto valor, diseñado como una mentoría profunda, para guiar a emprendedores y empresas en la construcción y optimización de su ecosistema digital.
+            </p>
+            <div class="mt-8 flex justify-center gap-4">
+                <a href="#inversion" class="bg-amber-600 text-white font-bold py-3 px-8 rounded-full hover:bg-amber-700 transition-transform transform hover:scale-105">Ver Paquetes</a>
+                <a href="#servicios" class="bg-white text-amber-600 font-bold py-3 px-8 rounded-full border border-amber-600 hover:bg-amber-50 transition-transform transform hover:scale-105">Explorar Servicios</a>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="servicios" class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold">Mis Pilares de Expertise</h2>
+                    <p class="mt-4 max-w-2xl mx-auto text-gray-600">Cada servicio está diseñado para construir una base sólida para el crecimiento. Haz clic en cada pilar para ver los detalles.</p>
+                </div>
+                <div id="services-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                </div>
+            </div>
+        </section>
+        
+        <!-- Investment Section -->
+        <section id="inversion" class="py-16 md:py-24">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold">Opciones de Inversión</h2>
+                    <p class="mt-4 max-w-2xl mx-auto text-gray-600">Tarifas flexibles diseñadas para PYMES y emprendedores, facilitando el acceso a mentoría estratégica con una excelente relación costo-beneficio.</p>
+                </div>
+                <div class="flex flex-col lg:flex-row gap-12 items-center">
+                    <div class="w-full lg:w-1/2">
+                        <h3 class="text-2xl font-bold mb-4">Ahorro Progresivo por Paquete</h3>
+                        <p class="text-gray-600 mb-6">La gráfica ilustra cómo la tarifa por hora disminuye a medida que contratas más horas, maximizando el valor de tu inversión.</p>
+                        <div class="chart-container">
+                            <canvas id="investmentChart"></canvas>
+                        </div>
+                    </div>
+                    <div id="pricing-cards" class="w-full lg:w-1/2 grid sm:grid-cols-2 gap-6">
+                    </div>
+                </div>
+                <div class="mt-12 bg-amber-50 border-l-4 border-amber-500 p-6 rounded-r-lg">
+                    <h4 class="font-bold text-xl text-amber-700">¿Por qué Contratar Paquetes de Mentoría?</h4>
+                    <ul class="mt-4 space-y-3 text-gray-700">
+                        <li><span class="font-bold text-amber-600">✔️ Ahorro Progresivo:</span> Hasta 43% menos por hora al contratar más tiempo.</li>
+                        <li><span class="font-bold text-amber-600">✔️ Flexibilidad Adaptativa:</span> Usa tus horas a tu ritmo en un plazo de 3 meses.</li>
+                        <li><span class="font-bold text-amber-600">✔️ Soporte Continuo:</span> Te acompañamos paso a paso para asegurar resultados tangibles.</li>
+                        <li><span class="font-bold text-amber-600">✔️ Profundización y Consolidación:</span> Abordamos temas complejos para un impacto duradero.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Methodology Section -->
+        <section id="metodologia" class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold">Metodología de la Mentoría</h2>
+                    <p class="mt-4 max-w-2xl mx-auto text-gray-600">Un enfoque práctico, flexible y efectivo adaptado a tu ritmo y ubicación.</p>
+                </div>
+                <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
+                    <div class="bg-gray-50 p-6 rounded-lg">
+                        <div class="flex items-center">
+                            <span class="text-3xl mr-4">💳</span>
+                            <h4 class="font-bold text-lg">Pago Anticipado</h4>
+                        </div>
+                        <p class="mt-2 text-gray-600">La inversión se realiza de forma segura mediante un enlace de pago, aceptando tarjeta de crédito o transferencia bancaria.</p>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-lg">
+                        <div class="flex items-center">
+                            <span class="text-3xl mr-4">📅</span>
+                            <h4 class="font-bold text-lg">Agendamiento Simplificado</h4>
+                        </div>
+                        <p class="mt-2 text-gray-600">Una vez pagado, agenda tus sesiones fácilmente vía Microsoft Bookings, eligiendo los horarios que más te convengan.</p>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-lg">
+                        <div class="flex items-center">
+                            <span class="text-3xl mr-4">💻</span>
+                            <h4 class="font-bold text-lg">Sesiones Online y Grabadas</h4>
+                        </div>
+                        <p class="mt-2 text-gray-600">Las sesiones son por Microsoft Teams. Se pueden grabar y compartir para que repases el contenido cuando quieras.</p>
+                    </div>
+                     <div class="bg-gray-50 p-6 rounded-lg">
+                        <div class="flex items-center">
+                            <span class="text-3xl mr-4">⏳</span>
+                            <h4 class="font-bold text-lg">Plazo y Disponibilidad</h4>
+                        </div>
+                        <p class="mt-2 text-gray-600">Tienes 3 meses para consumir las horas. Siempre hay disponibilidad agendando con unos días de anticipación.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <footer id="contacto" class="bg-gray-800 text-white">
+            <div class="container mx-auto px-6 py-12 text-center">
+                <h2 class="text-3xl font-bold">¿Listo para transformar tu estrategia digital?</h2>
+                <p class="mt-4 max-w-2xl mx-auto text-gray-300">Contáctame para agendar una sesión exploratoria y diseñar un plan de mentoría a tu medida.</p>
+                <div class="mt-8 flex flex-col md:flex-row justify-center items-center gap-6">
+                    <a href="https://wa.me/573014777472" target="_blank" class="bg-amber-600 text-white font-bold py-3 px-8 rounded-full hover:bg-amber-700 transition-transform transform hover:scale-105">Contactar por WhatsApp</a>
+                    <a href="mailto:felipe.romero@leanservice.com.co" class="text-amber-400 hover:text-white">felipe.romero@leanservice.com.co</a>
+                </div>
+                 <div class="mt-10 border-t border-gray-700 pt-6">
+                    <p class="text-gray-400">Andrés Felipe Romero</p>
+                    <p class="text-gray-500">Más información en <a href="https://leanservice.com.co" target="_blank" class="text-amber-400 hover:underline">Lean Service SAS</a></p>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        
+        const servicesData = [
+            {
+                icon: '🎯',
+                title: 'Estrategia Digital Integral y Ágil',
+                description: 'Co-creación de una estrategia robusta, flexible y orientada a resultados.',
+                details: [
+                    'Diagnóstico y Auditoría Digital',
+                    'Definición de Objetivos SMART+E',
+                    'Investigación de Mercado y Customer Insights',
+                    'Diseño de Customer Journey Omni-canal',
+                    'Arquitectura de Contenidos y SEO Estratégico',
+                    'Frameworks de Marketing Ágil'
+                ]
+            },
+            {
+                icon: '📈',
+                title: 'Optimización de Pauta Digital',
+                description: 'Transforma tu inversión publicitaria en un motor de crecimiento predecible.',
+                details: [
+                    'Estrategias de Google Ads y Meta Ads',
+                    'Publicidad Programática y Nativa',
+                    'Optimización Basada en Datos',
+                    'Atribución Multi-touch',
+                    'A/B Testing y Experimentación Continua',
+                    'Cumplimiento de Privacidad (GDPR, CCPA)'
+                ]
+            },
+            {
+                icon: '💻',
+                title: 'Desarrollo de Activos Digitales',
+                description: 'Plataformas web que son potentes herramientas de conversión y experiencia de usuario.',
+                details: [
+                    'Diseño UX/UI Centrado en el Humano',
+                    'Desarrollo Web Orientado a la Conversión',
+                    'SEO Técnico y On-Page Avanzado',
+                    'Optimización de Rendimiento (Core Web Vitals)',
+                    'Integración de Herramientas de Analítica',
+                    'Estrategias de Personalización Web'
+                ]
+            },
+            {
+                icon: '👥',
+                title: 'Implementación de Ecosistemas CRM',
+                description: 'Centraliza, automatiza y personaliza tus interacciones con los clientes.',
+                details: [
+                    'Selección Estratégica de CRM',
+                    'Diseño de Flujos de Trabajo y Automatización',
+                    'Gestión de Datos y Segmentación Avanzada',
+                    'Integración CRM-Marketing-Ventas',
+                    'Reportes y Dashboards Personalizados',
+                    'Capacitación y Adopción del Equipo'
+                ]
+            },
+            {
+                icon: '🤖',
+                title: 'Innovación con Soluciones de IA',
+                description: 'Desbloquea nuevas dimensiones de eficiencia, personalización y análisis predictivo.',
+                details: [
+                    'Automatización Inteligente de Marketing',
+                    'Análisis Predictivo y Modelado de Comportamiento',
+                    'Personalización Hiper-escalable',
+                    'Optimización de Contenidos Generativos',
+                    'Optimización de Campañas con IA',
+                    'Ética y Gobernanza de la IA'
+                ]
+            }
+        ];
+        
+        const pricingData = [
+            { hours: '1 hora', type: 'Consulta Express', pricePerHour: 140000, totalPrice: 140000 },
+            { hours: '4 horas', type: 'Paquete Inicial', pricePerHour: 120000, totalPrice: 480000 },
+            { hours: '8 horas', type: 'Paquete Crecimiento', pricePerHour: 100000, totalPrice: 800000 },
+            { hours: '12 horas', type: 'Paquete Estratégico', pricePerHour: 90000, totalPrice: 1080000 }
+        ];
+
+        const servicesGrid = document.getElementById('services-grid');
+        servicesData.forEach(service => {
+            const card = document.createElement('div');
+            card.className = 'service-card bg-white p-8 rounded-lg shadow-md cursor-pointer border border-gray-200';
+            card.innerHTML = `
+                <div class="flex items-start justify-between">
+                    <div>
+                        <span class="text-4xl">${service.icon}</span>
+                        <h3 class="font-bold text-xl mt-4">${service.title}</h3>
+                        <p class="text-gray-600 mt-2">${service.description}</p>
+                    </div>
+                    <span class="text-amber-600 text-2xl transform transition-transform duration-300">&#x25BC;</span>
+                </div>
+                <div class="details hidden mt-4 pt-4 border-t border-gray-200">
+                    <ul class="space-y-2 list-disc list-inside text-gray-600">
+                        ${service.details.map(detail => `<li>${detail}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+            servicesGrid.appendChild(card);
+            
+            card.addEventListener('click', () => {
+                card.querySelector('.details').classList.toggle('hidden');
+                card.querySelector('.text-2xl').classList.toggle('rotate-180');
+            });
+        });
+        
+        const pricingCardsContainer = document.getElementById('pricing-cards');
+        pricingData.forEach((pkg, index) => {
+            const card = document.createElement('div');
+            card.className = 'pricing-card border-2 p-6 rounded-lg text-center transition-all duration-300 cursor-pointer hover:border-amber-600 hover:shadow-xl';
+            card.dataset.index = index;
+            card.innerHTML = `
+                <h4 class="font-bold text-lg">${pkg.type}</h4>
+                <p class="text-gray-500 text-sm">${pkg.hours}</p>
+                <p class="text-3xl font-extrabold my-4">${new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(pkg.totalPrice)}</p>
+                <p class="text-amber-600 font-semibold">${new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(pkg.pricePerHour)} / hora</p>
+            `;
+            pricingCardsContainer.appendChild(card);
+        });
+
+        const ctx = document.getElementById('investmentChart').getContext('2d');
+        const investmentChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: pricingData.map(p => p.hours),
+                datasets: [{
+                    label: 'Tarifa por Hora (COP)',
+                    data: pricingData.map(p => p.pricePerHour),
+                    backgroundColor: 'rgba(217, 119, 6, 0.2)',
+                    borderColor: 'rgba(217, 119, 6, 1)',
+                    borderWidth: 2,
+                    borderRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value, index, values) {
+                                return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(value);
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.y !== null) {
+                                    label += new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(context.parsed.y);
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        const pricingCards = document.querySelectorAll('.pricing-card');
+        pricingCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                const index = card.dataset.index;
+                investmentChart.data.datasets[0].backgroundColor = pricingData.map((_, i) => i == index ? 'rgba(217, 119, 6, 0.8)' : 'rgba(217, 119, 6, 0.2)');
+                investmentChart.update();
+            });
+            card.addEventListener('mouseleave', () => {
+                investmentChart.data.datasets[0].backgroundColor = 'rgba(217, 119, 6, 0.2)';
+                investmentChart.update();
+            });
+        });
+
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        const navLinks = document.querySelectorAll('.nav-link, #mobile-menu a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if(!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+
+        const sections = document.querySelectorAll('section[id]');
+        const header = document.getElementById('header');
+        const headerHeight = header.offsetHeight;
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const id = entry.target.getAttribute('id');
+                const navLink = document.querySelector(`.nav-link[href="#${id}"]`);
+                if (entry.isIntersecting) {
+                    document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active-link'));
+                    if(navLink) navLink.classList.add('active-link');
+                }
+            });
+        }, { rootMargin: `-${headerHeight}px 0px 0px 0px` });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+    });
+</script>
+</body>
+</html>
