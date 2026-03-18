@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andrés Felipe Romero - Transformación Tecnológica & Marketing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Harmony -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFBF8;
+            color: #3D3B3A;
+        }
+        .nav-link {
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            display: block;
+            margin-top: 5px;
+            right: 0;
+            background: #D97706;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover:after {
+            width: 100%;
+            left: 0;
+            background: #D97706;
+        }
+        .active-link:after {
+             width: 100%;
+            left: 0;
+            background: #D97706;
+        }
+        .service-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .chart-container {
+            position: relative;
+            margin: auto;
+            height: 40vh;
+            max-height: 400px;
+            width: 100%;
+            max-width: 600px;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header & Navigation -->
+    <header id="header" class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-xl font-bold text-amber-600">Andrés F. Romero</a>
+            <div class="hidden md:flex space-x-8">
+                <a href="#servicios" class="nav-link text-gray-600 hover:text-amber-600 font-medium">Servicios</a>
+                <a href="#inversion" class="nav-link text-gray-600 hover:text-amber-600 font-medium">Inversión</a>
+                <a href="#metodologia" class="nav-link text-gray-600 hover:text-amber-600 font-medium">Metodología</a>
+                <a href="#contacto" class="nav-link text-gray-600 hover:text-amber-600 font-medium">Contacto</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+            <a href="#servicios" class="block py-2 text-gray-600 hover:text-amber-600">Servicios</a>
+            <a href="#inversion" class="block py-2 text-gray-600 hover:text-amber-600">Inversión</a>
+            <a href="#metodologia" class="block py-2 text-gray-600 hover:text-amber-600">Metodología</a>
+            <a href="#contacto" class="block py-2 text-gray-600 hover:text-amber-600">Contacto</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="container mx-auto px-6 py-16 md:py-24 text-center">
+            <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">
+                Tu Socio Estratégico para la <span class="text-amber-600">Transformación Digital & IA</span>
+            </h1>
+            <p class="mt-6 max-w-3xl mx-auto text-lg text-gray-600">
+                Acompañamiento especializado para empresas que buscan integrar Inteligencia Artificial y automatización en sus procesos de Marketing y Ventas.
+            </p>
+            <div class="mt-8 flex justify-center gap-4">
+                <a href="#inversion" class="bg-amber-600 text-white font-bold py-3 px-8 rounded-full hover:bg-amber-700 transition-transform transform hover:scale-105">Ver Planes</a>
+                <a href="#servicios" class="bg-white text-amber-600 font-bold py-3 px-8 rounded-full border border-amber-600 hover:bg-amber-50 transition-transform transform hover:scale-105">Explorar Servicios</a>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="servicios" class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold">Mis Pilares de Expertise</h2>
+                    <p class="mt-4 max-w-2xl mx-auto text-gray-600">Soluciones diseñadas para escalar operaciones y reducir carga operativa.</p>
+                </div>
+                <div id="services-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                </div>
+            </div>
+        </section>
+        
+        <!-- Investment Section -->
+        <section id="inversion" class="py-16 md:py-24">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold">Planes de Transformación</h2>
+                    <p class="mt-4 max-w-2xl mx-auto text-gray-600">Estructura de precios diseñada para proyectos de mediano y largo plazo. Desde el diagnóstico inicial hasta la implementación completa del ecosistema.</p>
+                </div>
+                <div class="flex flex-col lg:flex-row gap-12 items-center">
+                    <div class="w-full lg:w-1/2">
+                        <h3 class="text-2xl font-bold mb-4">Optimización de Costos por Escala</h3>
+                        <p class="text-gray-600 mb-6">La gráfica ilustra cómo la tarifa por hora se optimiza al comprometerse con paquetes de transformación más robustos.</p>
+                        <div class="chart-container">
+                            <canvas id="investmentChart"></canvas>
+                        </div>
+                    </div>
+                    <div id="pricing-cards" class="w-full lg:w-1/2 grid sm:grid-cols-2 gap-6">
+                    </div>
+                </div>
+                <div class="mt-12 bg-amber-50 border-l-4 border-amber-500 p-6 rounded-r-lg">
+                    <h4 class="font-bold text-xl text-amber-700">Beneficios de los Paquetes Corporativos</h4>
+                    <ul class="mt-4 space-y-3 text-gray-700">
+                        <li><span class="font-bold text-amber-600">✔️ Diagnóstico Seguro:</span> El paquete de 12h permite validar la estrategia sin grandes riesgos.</li>
+                        <li><span class="font-bold text-amber-600">✔️ Implementación Real:</span> Los paquetes de 30h y 60h aseguran tiempo para construir, no solo planear.</li>
+                        <li><span class="font-bold text-amber-600">✔️ Prioridad en Agenda:</span> Los clientes de transformación tienen preferencia en tiempos de respuesta.</li>
+                        <li><span class="font-bold text-amber-600">✔️ Tarifa Preferencial:</span> Ahorros significativos en el costo por hora para proyectos de largo aliento.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Methodology Section -->
+        <section id="metodologia" class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold">Metodología de Trabajo</h2>
+                    <p class="mt-4 max-w-2xl mx-auto text-gray-600">Un enfoque ágil y estructurado para garantizar resultados tangibles.</p>
+                </div>
+                <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
+                    <div class="bg-gray-50 p-6 rounded-lg">
+                        <div class="flex items-center">
+                            <span class="text-3xl mr-4">🎯</span>
+                            <h4 class="font-bold text-lg">Definición de Alcance</h4>
+                        </div>
+                        <p class="mt-2 text-gray-600">Iniciamos definiendo los objetivos claros del sprint (Diagnóstico, Implementación o Transformación).</p>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-lg">
+                        <div class="flex items-center">
+                            <span class="text-3xl mr-4">💳</span>
+                            <h4 class="font-bold text-lg">Activación del Paquete</h4>
+                        </div>
+                        <p class="mt-2 text-gray-600">La inversión se realiza mediante transferencia o enlace de pago corporativo para reservar el bloque de horas.</p>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-lg">
+                        <div class="flex items-center">
+                            <span class="text-3xl mr-4">📅</span>
+                            <h4 class="font-bold text-lg">Ejecución & Sprints</h4>
+                        </div>
+                        <p class="mt-2 text-gray-600">Coordinamos sesiones de trabajo y tiempos de desarrollo técnico según la prioridad del negocio.</p>
+                    </div>
+                     <div class="bg-gray-50 p-6 rounded-lg">
+                        <div class="flex items-center">
+                            <span class="text-3xl mr-4">🚀</span>
+                            <h4 class="font-bold text-lg">Entrega & Soporte</h4>
+                        </div>
+                        <p class="mt-2 text-gray-600">Las horas tienen una vigencia extendida para asegurar que se consuman generando valor real.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <footer id="contacto" class="bg-gray-800 text-white">
+            <div class="container mx-auto px-6 py-12 text-center">
+                <h2 class="text-3xl font-bold">¿Listo para modernizar tu empresa?</h2>
+                <p class="mt-4 max-w-2xl mx-auto text-gray-300">Hablemos para identificar cuál es el paquete ideal para iniciar tu transformación.</p>
+                <div class="mt-8 flex flex-col md:flex-row justify-center items-center gap-6">
+                    <a href="https://wa.me/573014777472" target="_blank" class="bg-amber-600 text-white font-bold py-3 px-8 rounded-full hover:bg-amber-700 transition-transform transform hover:scale-105">Contactar por WhatsApp</a>
+                    <a href="mailto:felipe.romero@leanservice.com.co" class="text-amber-400 hover:text-white">felipe.romero@leanservice.com.co</a>
+                </div>
+                 <div class="mt-10 border-t border-gray-700 pt-6">
+                    <p class="text-gray-400">Andrés Felipe Romero</p>
+                    <p class="text-gray-500">Más información en <a href="https://leanservice.com.co" target="_blank" class="text-amber-400 hover:underline">Lean Service SAS</a></p>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        
+        const servicesData = [
+            {
+                icon: '🤖',
+                title: 'Automatización & IA',
+                description: 'Implementación de agentes inteligentes y flujos automáticos para reducir carga operativa.',
+                details: [
+                    'Auditoría de Procesos para IA',
+                    'Integración de Chatbots (GPT/Claude)',
+                    'Automatización con Make/Zapier',
+                    'Agentes de Soporte y Ventas 24/7',
+                    'Capacitación de equipos en IA',
+                    'Gobernanza de Datos'
+                ]
+            },
+            {
+                icon: '🎯',
+                title: 'Estrategia Digital Integral',
+                description: 'Co-creación de una estrategia robusta, flexible y orientada a resultados.',
+                details: [
+                    'Diagnóstico y Auditoría Digital',
+                    'Definición de Objetivos SMART+E',
+                    'Diseño de Customer Journey Omni-canal',
+                    'Arquitectura de Contenidos',
+                    'Frameworks de Marketing Ágil'
+                ]
+            },
+            {
+                icon: '👥',
+                title: 'Ecosistemas CRM',
+                description: 'Centraliza, automatiza y personaliza tus interacciones con los clientes.',
+                details: [
+                    'Selección Estratégica de CRM',
+                    'Diseño de Pipelines de Venta',
+                    'Integración CRM-Marketing',
+                    'Reportes y Dashboards',
+                    'Limpieza y Segmentación de Datos'
+                ]
+            },
+            {
+                icon: '📈',
+                title: 'Optimización de Pauta',
+                description: 'Transforma tu inversión publicitaria en un motor de crecimiento predecible.',
+                details: [
+                    'Estrategias de Google Ads y Meta Ads',
+                    'Optimización Basada en Datos',
+                    'Atribución Multi-touch',
+                    'A/B Testing Continuo'
+                ]
+            },
+            {
+                icon: '💻',
+                title: 'Activos Digitales',
+                description: 'Plataformas web que son potentes herramientas de conversión.',
+                details: [
+                    'Diseño UX/UI',
+                    'Desarrollo Web (Landing Pages)',
+                    'SEO Técnico',
+                    'Optimización de Conversión (CRO)'
+                ]
+            }
+        ];
+        
+        // NUEVAS TARIFAS ACTUALIZADAS
+        const pricingData = [
+            { hours: '1 hora', type: 'Hora Estratégica', pricePerHour: 170000, totalPrice: 170000 },
+            { hours: '12 horas', type: 'Pack Diagnóstico', pricePerHour: 140000, totalPrice: 1680000 },
+            { hours: '30 horas', type: 'Pack Implementación', pricePerHour: 120000, totalPrice: 3600000 },
+            { hours: '60 horas', type: 'Pack Transformación', pricePerHour: 100000, totalPrice: 6000000 }
+        ];
+
+        const servicesGrid = document.getElementById('services-grid');
+        servicesData.forEach(service => {
+            const card = document.createElement('div');
+            card.className = 'service-card bg-white p-8 rounded-lg shadow-md cursor-pointer border border-gray-200';
+            card.innerHTML = `
+                <div class="flex items-start justify-between">
+                    <div>
+                        <span class="text-4xl">${service.icon}</span>
+                        <h3 class="font-bold text-xl mt-4">${service.title}</h3>
+                        <p class="text-gray-600 mt-2">${service.description}</p>
+                    </div>
+                    <span class="text-amber-600 text-2xl transform transition-transform duration-300">&#x25BC;</span>
+                </div>
+                <div class="details hidden mt-4 pt-4 border-t border-gray-200">
+                    <ul class="space-y-2 list-disc list-inside text-gray-600">
+                        ${service.details.map(detail => `<li>${detail}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+            servicesGrid.appendChild(card);
+            
+            card.addEventListener('click', () => {
+                card.querySelector('.details').classList.toggle('hidden');
+                card.querySelector('.text-2xl').classList.toggle('rotate-180');
+            });
+        });
+        
+        const pricingCardsContainer = document.getElementById('pricing-cards');
+        pricingData.forEach((pkg, index) => {
+            const card = document.createElement('div');
+            card.className = 'pricing-card border-2 p-6 rounded-lg text-center transition-all duration-300 cursor-pointer hover:border-amber-600 hover:shadow-xl';
+            card.dataset.index = index;
+            card.innerHTML = `
+                <h4 class="font-bold text-lg text-amber-800">${pkg.type}</h4>
+                <p class="text-gray-500 text-sm font-medium">${pkg.hours}</p>
+                <div class="my-4">
+                    <p class="text-3xl font-extrabold text-gray-900">${new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(pkg.totalPrice)}</p>
+                    <p class="text-xs text-gray-400 mt-1">Inversión Total</p>
+                </div>
+                <div class="bg-amber-50 rounded-full py-1 px-3 inline-block">
+                    <p class="text-amber-700 font-semibold text-sm">${new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(pkg.pricePerHour)} / hora</p>
+                </div>
+            `;
+            pricingCardsContainer.appendChild(card);
+        });
+
+        const ctx = document.getElementById('investmentChart').getContext('2d');
+        const investmentChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: pricingData.map(p => p.hours),
+                datasets: [{
+                    label: 'Tarifa por Hora (COP)',
+                    data: pricingData.map(p => p.pricePerHour),
+                    backgroundColor: 'rgba(217, 119, 6, 0.2)',
+                    borderColor: 'rgba(217, 119, 6, 1)',
+                    borderWidth: 2,
+                    borderRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value, index, values) {
+                                return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(value);
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.y !== null) {
+                                    label += new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(context.parsed.y);
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        const pricingCards = document.querySelectorAll('.pricing-card');
+        pricingCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                const index = card.dataset.index;
+                investmentChart.data.datasets[0].backgroundColor = pricingData.map((_, i) => i == index ? 'rgba(217, 119, 6, 0.8)' : 'rgba(217, 119, 6, 0.2)');
+                investmentChart.update();
+            });
+            card.addEventListener('mouseleave', () => {
+                investmentChart.data.datasets[0].backgroundColor = 'rgba(217, 119, 6, 0.2)';
+                investmentChart.update();
+            });
+        });
+
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        const navLinks = document.querySelectorAll('.nav-link, #mobile-menu a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if(!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+
+        const sections = document.querySelectorAll('section[id]');
+        const header = document.getElementById('header');
+        const headerHeight = header.offsetHeight;
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const id = entry.target.getAttribute('id');
+                const navLink = document.querySelector(`.nav-link[href="#${id}"]`);
+                if (entry.isIntersecting) {
+                    document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active-link'));
+                    if(navLink) navLink.classList.add('active-link');
+                }
+            });
+        }, { rootMargin: `-${headerHeight}px 0px 0px 0px` });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+    });
+</script>
+</body>
+</html>
